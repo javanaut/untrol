@@ -6,6 +6,7 @@ package main
 
 import (
 	"bytes"
+//    "encoding/json"
 	"log"
 	"net/http"
 	"time"
@@ -71,6 +72,8 @@ func (c *Client) readPump() {
 			}
 			break
 		}
+        //message = bytes.TrimSpace(bytes.Replace(message, newline, space, -1))
+        // use json's Unmarshal method to decode messages into a struct
 		message = bytes.TrimSpace(bytes.Replace(message, newline, space, -1))
 		c.hub.broadcast <- message
 	}

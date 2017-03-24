@@ -5,6 +5,7 @@
 <script type="text/javascript">
 window.onload = function () {
     var conn;
+	var initialized = false;
     var msg = document.getElementById("msg");
     var log = document.getElementById("log");
 
@@ -23,7 +24,12 @@ window.onload = function () {
         if (!msg.value) {
             return false;
         }
-        conn.send(msg.value);
+        if (!initialized) {
+            conn.send("{'init' : {'room':"+window.location+"} }");
+            initialized = true;
+        }
+        //conn.send(msg.value);
+        conn.send("{'msg':'"+msg.value+"'}");
         msg.value = "";
         return false;
     };
