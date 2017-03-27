@@ -19,7 +19,7 @@ type Hub struct {
 	// Unregister requests from clients.
 	unregister chan *Client
 
-	rooms map[string]string
+	rooms map[string][]*Client
 }
 
 func newHub() *Hub {
@@ -36,6 +36,10 @@ func (h *Hub) run() {
 		select {
 		case client := <-h.register:
 			h.clients[client] = true
+            //if val, ok := h.rooms[client.room]; !ok {
+                // add new room
+                //h.rooms[client.room] := make([]*Client, 1)
+            //}
 		case client := <-h.unregister:
 			if _, ok := h.clients[client]; ok {
 				delete(h.clients, client)
