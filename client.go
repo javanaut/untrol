@@ -6,11 +6,9 @@ package main
 
 import (
 	"bytes"
-//    "encoding/json"
 	"log"
 	"net/http"
 	"time"
-
 	"github.com/gorilla/websocket"
 )
 
@@ -73,8 +71,8 @@ func (c *Client) readPump() {
 			break
 		}
         //message = bytes.TrimSpace(bytes.Replace(message, newline, space, -1))
-        // use json's Unmarshal method to decode messages into a struct
-		message = bytes.TrimSpace(bytes.Replace(message, newline, space, -1))
+        message = bytes.TrimSpace(bytes.Replace(message, newline, space, -1))
+
         fields := bytes.SplitN(message, []byte(":"), 2)
         log.Printf("fields: %s", fields)
         switch(string(fields[0])) {
@@ -82,10 +80,8 @@ func (c *Client) readPump() {
                 c.room = string(fields[1])
                 break
             case "msg":
-                //c.room = fields[1]
                 c.hub.broadcast <- fields[1]
                 break
-            
         }
 	}
 }

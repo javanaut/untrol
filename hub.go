@@ -4,6 +4,11 @@
 
 package main
 
+const (
+	// Max number of clients allowed in a room
+	maxRoomSize = 100
+)
+
 // hub maintains the set of active clients and broadcasts messages to the
 // clients.
 type Hub struct {
@@ -38,8 +43,12 @@ func (h *Hub) run() {
 			h.clients[client] = true
             //if val, ok := h.rooms[client.room]; !ok {
                 // add new room
-                //h.rooms[client.room] := make([]*Client, 1)
+                //h.rooms[client.room] := make([]*Client, maxRoomSize)
             //}
+            // if len(h.rooms[client.room]) <= maxRoomSize
+            //    add client to appropriate room 
+            // else report error
+            
 		case client := <-h.unregister:
 			if _, ok := h.clients[client]; ok {
 				delete(h.clients, client)
