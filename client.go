@@ -75,7 +75,18 @@ func (c *Client) readPump() {
         //message = bytes.TrimSpace(bytes.Replace(message, newline, space, -1))
         // use json's Unmarshal method to decode messages into a struct
 		message = bytes.TrimSpace(bytes.Replace(message, newline, space, -1))
-		c.hub.broadcast <- message
+        fields := bytes.SplitN(message, []byte(":"), 2)
+        log.Printf("fields: %s", fields)
+        switch(string(fields[0])) {
+            case "setroom":
+                c.room = string(fields[1])
+                break
+            case "msg":
+                //c.room = fields[1]
+                c.hub.broadcast <- fields[1]
+                break
+            
+        }
 	}
 }
 

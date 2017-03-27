@@ -25,11 +25,11 @@ window.onload = function () {
             return false;
         }
         if (!initialized) {
-            conn.send("{'init' : {'room':"+window.location+"} }");
+            conn.send("setroom:"+window.location);
             initialized = true;
         }
         //conn.send(msg.value);
-        conn.send("{'msg':'"+msg.value+"'}");
+        conn.send("msg:"+msg.value);
         msg.value = "";
         return false;
     };
