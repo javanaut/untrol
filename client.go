@@ -77,10 +77,10 @@ func (c *Client) readPump() {
         log.Printf("fields: %s", fields)
         switch(string(fields[0])) {
             case "setroom":
-                c.room = string(fields[1])
+            c.room = string(fields[1])
                 break
             case "msg":
-                c.hub.broadcast <- fields[1]
+            c.hub.broadcast <- append([]byte(c.room + ":"), fields[1]...)
                 break
         }
 	}
